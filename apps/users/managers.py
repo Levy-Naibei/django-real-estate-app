@@ -37,3 +37,36 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
+    def create_superuser(self, username, first_name, last_name, email, password, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_active", True)
+
+        if extra_fields.get("is_staff") is not True:
+            raise ValidationError(_("Superuser must have is_staff=True"))
+        
+        if extra_fields.get("is_active") is not True:
+            raise ValidationError(_("Superuser must have is_active=True"))
+        
+        if extra_fields.get("is_superuser") is not True:
+            raise ValidationError(_("Superuser must have is_superuser=True"))
+        
+        if not password:
+            raise ValueError(_("Superuser must have password"))
+        
+        if email:
+            email = self.normalize_email(email)
+            self.email_validator(email)
+        else:
+            raise ValueError(("Admin Account: An email address is required."))
+
+        user = self.create_user(
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            **extra_fields
+        )
+
+        user.save(using=self._db)
+        return user
