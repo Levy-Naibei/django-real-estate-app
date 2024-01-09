@@ -24,9 +24,9 @@ class Profile(TimestampedUUIDModel):
     city= models.CharField(verbose_name=_("City"), default="Nairobi", max_length=150, null=False, blank=False)
     is_buyer= models.BooleanField(verbose_name=_("Buyer"), default=False, help_text="Are you looking to buy a property?")
     is_seller= models.BooleanField(verbose_name=_("Seller"), default=False, help_text="Are you looking to sell a property?")
-    is_agent = models.BooleanField(verbose_name=_("Agent"), default=False, help_text="Are an Agent?")
+    is_agent = models.BooleanField(verbose_name=_("Agent"), default=False, help_text="Are you an Agent?")
     top_agent = models.BooleanField(verbose_name=_("Top agent"), default=False)
-    rating = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=False)
+    rating = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
     num_reviews = models.IntegerField(verbose_name=_("Number of reviews"), default=0, null=True, blank=True)
 
     def __str__(self):
