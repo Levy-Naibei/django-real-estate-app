@@ -55,4 +55,28 @@ class ProfileSerializer(serializers.ModelSerializer):
         if instance.top_agent:
             representation["top_agent"] = True
         return representation
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    country = CountryField(name_only=True)
+
+    class Meta:
+        model = Profile
+        fields = [
+            "gender",
+            "phone_number",
+            "profile_photo",
+            "about_me",
+            "license",
+            "country",
+            "city",
+            "is_buyer",
+            "is_seller",
+            "is_agent"
+        ]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if instance.top_agent:
+            representation["top_agent"] = True
+        return representation
     
