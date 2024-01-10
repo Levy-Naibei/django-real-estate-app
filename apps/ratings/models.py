@@ -22,7 +22,7 @@ class Rating(TimestampedUUIDModel):
     agent = models.ForeignKey(
         Profile,
         verbose_name=_("Agent being rated"),
-        related_name="agent_rated",
+        related_name="agent_reviewed",
         null=True, 
         on_delete=models.SET_NULL
     )
