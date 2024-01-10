@@ -47,3 +47,8 @@ class UserSerializer(serializers.ModelSerializer):
             # if user is admin, then add admin=True to serializer field
             representation["admin"] = True
         return representation
+
+class CreateUserSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        model = User
+        fields = ["id", "username", "email", "username", "first_name", "last_name", "password"]
