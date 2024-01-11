@@ -8,7 +8,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username")
     first_name = serializers.CharField(source="user.first_name")
     last_name = serializers.CharField(source="user.last_name")
-    email = serializers.EmailField(source="email")
+    email = serializers.EmailField(source="user.email")
     full_name = serializers.SerializerMethodField(read_only=True)
     country = CountryField(name_only=True)
     reviews = serializers.SerializerMethodField(read_only=True)
@@ -43,8 +43,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         return f"{first_name} {last_name}"
     
     def get_reviews(self, obj):
-        # Rating model => agent field => value of related_name prop == agent_reviewed
-        reviews = obj.agent.agent_reviewed.all()
+        # Rating model => agent field => value of related_name prop == agent_reviewed is what points to profile
+        reviews = obj.agent_reviewed.all()
         # if many=True, you tell drf that queryset contains mutiple items (a list of items) 
         # so drf needs to serialize each item with serializer class (and serializer.data will be a list)
         serializer = RatingSerializer(reviews, many=True)
