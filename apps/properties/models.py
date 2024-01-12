@@ -20,3 +20,18 @@ class PropertyPublishedManager(models.Manager):
             .filter(published_status=True)
         )
 
+class Property(TimestampedUUIDModel):
+    class AdvertType(models.TextChoices):
+        FOR_SALE="For Sale", _("For Sale")
+        FOR_RENT="For Rent", _("For Rent")
+        AUCTION="Auction", _("Auction")
+    
+    class PropertyType(models.TextChoices):
+        HOUSE="House", _("House")
+        APARTMENT="Apartment", _("Apartment")
+        OFFICE="Office", _("Office")
+        WAREHOUSE="Warehouse", _("Warehouse")
+        COMMERCIAL="Commercial", _("Commercial")
+        OTHER="Other", _("Other")
+    
+    
