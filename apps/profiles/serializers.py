@@ -45,6 +45,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_reviews(self, obj):
         # Rating model => agent field => value of related_name prop == agent_reviewed is what points to profile
         reviews = obj.agent_reviewed.all()
+        print("====== ", reviews)
         # if many=True, you tell drf that queryset contains mutiple items (a list of items) 
         # so drf needs to serialize each item with serializer class (and serializer.data will be a list)
         serializer = RatingSerializer(reviews, many=True)

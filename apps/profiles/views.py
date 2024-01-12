@@ -43,9 +43,10 @@ class UpdateProfileView(APIView):
             raise NotYourProfile
         
         data = request.data
+        print("======== ", data)
         serializer = UpdateProfileSerializer(
-            data=data,
             instance=request.user.profile,
+            data=data,
             partial=True
         ) # partial because we are updating
 
