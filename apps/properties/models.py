@@ -127,3 +127,12 @@ class Property(TimestampedUUIDModel):
         self.description = str.capitalize(self.description)
         self.ref_code = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
         return super(Property, self).save(*args, **kwargs)
+
+    @property
+    def final_property_price(self):
+        tax_in_percent = self.tax
+        property_price = self.price
+        tax_amount = round(tax_in_percent * property_price, 2)
+        price_with_tax = float(round(tax_amount + property_price, 2))
+        return price_with_tax
+        
