@@ -43,3 +43,9 @@ class PropertySerializer(serializers.ModelSerializer):
     def get_user(self, obj):
         return obj.user.username
     
+class PropertyCreateSerializer(serializers.ModelSerializer):
+    country = CountryField(name_only=True)
+
+    class Meta:
+        model = Property
+        exclude = ["updated_at", "pkid"]
