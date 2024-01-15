@@ -139,7 +139,7 @@ class Property(TimestampedUUIDModel):
 
 class PropertyViews(TimestampedUUIDModel):
     """tracks property views using ip address"""
-    ip_address = models.CharField(verbose_name=_("IP Address"), nax_length=255)
+    ip_address = models.CharField(verbose_name=_("IP Address"), max_length=255)
     property = models.ForeignKey(Property, related_name="property_views", on_delete=models.CASCADE)
 
     def __str__(self):
