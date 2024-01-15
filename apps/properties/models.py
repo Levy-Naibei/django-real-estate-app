@@ -135,4 +135,17 @@ class Property(TimestampedUUIDModel):
         tax_amount = round(tax_in_percent * property_price, 2)
         price_with_tax = float(round(tax_amount + property_price, 2))
         return price_with_tax
+    
+
+class PropertyViews(TimestampedUUIDModel):
+    """tracks property views using ip address"""
+    ip_address = models.CharField(verbose_name=_("IP Address"), nax_length=255)
+    property = models.ForeignKey(Property, related_name="property_views", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return (f"Total views on - {self.property.title} is - {self.property.views}")
+    
+    class Meta:
+        verbose_name="Total views on property"
+        verbose_name="Total property views"
         
