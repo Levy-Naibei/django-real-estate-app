@@ -49,9 +49,7 @@ class Property(TimestampedUUIDModel):
     postal_code = models.CharField(verbose_name=_("Postal code"), max_length=150, default="72")
     street_address=models.CharField(verbose_name=_("Street Address"), max_length=150, default="barng'etuny")
     property_number = models.IntegerField(
-        verbose_name=_("Property number"), 
-        max_length=100, default=121, 
-        validators=[MinValueValidator(1)]
+        verbose_name=_("Property number"), default=121, validators=[MinValueValidator(1)]
     )
     price = models.DecimalField(
         verbose_name=_("Price"), max_digits=8, decimal_places=2, default=0.0
@@ -147,5 +145,5 @@ class PropertyViews(TimestampedUUIDModel):
     
     class Meta:
         verbose_name="Total views on property"
-        verbose_name="Total property views"
+        verbose_name_plural="Total property views"
         
