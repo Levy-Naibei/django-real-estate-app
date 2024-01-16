@@ -41,3 +41,23 @@ class ListAllPropertiesAPIView(generics.ListAPIView):
     filterset_class = PropertyFilter
     search_fields = ["country", "city"]
     ordering_fields = ["created_at"]
+
+class ListAgentsPropertyAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PropertySerializer
+    pagination_class = PropertyPagination
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    filterset_class = PropertyFilter
+    search_fields = ["country", "city"]
+    ordering_fields = ["created_at"]
+    
+    # to change the queryset of list_api_view, use get_queryset method
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Property.objects.filter(user=user).order_by("-created_at")
+        return queryset
+    
