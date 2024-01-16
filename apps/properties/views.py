@@ -60,4 +60,7 @@ class ListAgentsPropertyAPIView(generics.ListAPIView):
         user = self.request.user
         queryset = Property.objects.filter(user=user).order_by("-created_at")
         return queryset
-    
+
+class PropertyViewsAPIView(generics.ListAPIView):
+    serializer_class = PropertyViewSerializer
+    queryset = PropertyViews.objects.all()
