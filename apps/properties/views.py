@@ -64,3 +64,26 @@ class ListAgentsPropertyAPIView(generics.ListAPIView):
 class PropertyViewsAPIView(generics.ListAPIView):
     serializer_class = PropertyViewSerializer
     queryset = PropertyViews.objects.all()
+
+class PropertyDetailAPIView(APIView):
+   def get(self, request, slug):
+       property = Property.objects.get(slug=slug)
+
+       # whenever user visits this site via proxy-server, 
+       # then the http_via is the ip addr of proxy server and 
+       # http_x_forwarded_for is the ip addr fo the actual user who uses the proxy server
+       x_forwarded_for = request.META.get("HTTP_FORWARDED_FOR")
+       if x_forwarded_for:
+           ip_addr = x_forwarded_for.split(",")[0]
+       else:
+           ip_addr = request.META.get("REMOTE_ADDR")
+        
+       if not PropertyViews.objects.filter(property=property, ip=ip_addr).exists():
+           PropertyViews.objects.create(property=property, ip=ip_addr)
+           # views to property will only increment if user goes to DETAIL_VIEW of property
+           # for each unique user using the ip_addr
+           property.views += 1
+           property.save()
+
+       serializer = PropertySerializer(property, context={"request": request})
+       return Response(serializer.data, status=status.HTTP_200_OK)
