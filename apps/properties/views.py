@@ -28,3 +28,16 @@ class PropertyFilter(django_filters.FilterSet):
     class Meta:
         model = Property
         field = ["advert_type", "property_type", "price"]
+
+class ListAllPropertiesAPIView(generics.ListAPIView):
+    serializer_class = PropertySerializer
+    queryset = Property.objects.all().order_by("-created_at")
+    pagination_class = PropertyPagination
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    filterset_class = PropertyFilter
+    search_fields = ["country", "city"]
+    ordering_fields = ["created_at"]
