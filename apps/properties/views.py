@@ -120,7 +120,7 @@ def update_property_api_view(request, slug):
         return Response(serializer.data)
     
 
-@api_view("POST")
+@api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
 def create_property_api_view(request):
     user = request.user
@@ -157,3 +157,18 @@ def delete_property_api_view(request, slug):
         else:
             data["failure"] = "Delete failed!"
         return Response(data=data)
+
+
+@api_view(["POST"])
+def upload_property_image(request):
+    data = request.data
+    print("property image ==== ", data)
+    property_id = data["property_id"]
+    property = Property.objects.get(id=property_id)
+    property.cover_photo = request.FILES.get("cover_photo")
+    property.photo1 = request.FILES.get("photo1")
+    property.photo2 = request.FILES.get("photo2")
+    property.photo3 = request.FILES.get("photo3")
+    property.photo4 = request.FILES.get("photo4")
+    property.save()
+    return Response("Image(s) upload")
