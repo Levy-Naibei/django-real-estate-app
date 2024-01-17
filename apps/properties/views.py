@@ -32,7 +32,7 @@ class PropertyFilter(django_filters.FilterSet):
 
     class Meta:
         model = Property
-        field = ["advert_type", "property_type", "price"]
+        fields = ["advert_type", "property_type", "price"]
 
 
 class ListAllPropertiesAPIView(generics.ListAPIView):
