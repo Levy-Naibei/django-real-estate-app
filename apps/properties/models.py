@@ -37,7 +37,7 @@ class Property(TimestampedUUIDModel):
     user = models.ForeignKey(
         User,
         verbose_name=_("Agent, Buyer or Seller"),
-        # related_name="agent_buyer", 
+        related_name="agent_buyer", 
         on_delete=models.DO_NOTHING
     )
     title = models.CharField(verbose_name=_("Property title"), max_length=250)
