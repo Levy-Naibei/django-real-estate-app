@@ -135,3 +135,25 @@ def create_property_api_view(request):
         )
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["DELETE"])
+@permission_classes([permissions.IsAuthenticated])
+def delete_property_api_view(request, slug):
+    try:
+        property = Property.objects.get(slug=slug)
+    except Property.DoesNotExist:
+        raise PropertyNotFound
+    
+    user = request.user
+    if property.user != user:
+        return Response({"error": "Not your property!"}, status=status.HTTP_403_FORBIDDEN)
+    
+    if request.method == "DELETE":
+        delete_operation = property.delete()
+        data = {}
+        if delete_operation:
+            data["success"] = "Delete successful!"
+        else:
+            data["failure"] = "Delete failed!"
+        return Response(data=data)
