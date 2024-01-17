@@ -118,3 +118,20 @@ def update_property_api_view(request, slug):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+    
+
+@api_view("POST")
+@permission_classes([permissions.IsAuthenticated])
+def create_property_api_view(request):
+    user = request.user
+    data = request.data
+    data["user"] = request.user.pkid
+    serializer = PropertyCreateSerializer(data=data)
+
+    if serializer.is_valid():
+        serializer.save()
+        logger.info(
+            f"Property {serializer.data.get('title')} created by {user.username}"
+        )
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
