@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from django.core.validators import MinValueValidator
+from django.utils import timezone
 
 from apps.common.models import TimestampedUUIDModel
 
@@ -108,6 +109,7 @@ class Property(TimestampedUUIDModel):
         verbose_name=_("Published Status"), default=False
     )
     views = models.IntegerField(verbose_name=_("Total Views"), default=0)
+    date_created = models.DateTimeField(default=timezone.now)
 
     objects = models.Manager()
     published = PropertyPublishedManager()
