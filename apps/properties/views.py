@@ -50,7 +50,7 @@ class ListAllPropertiesAPIView(generics.ListAPIView):
 
 
 class ListAgentsPropertiesAPIView(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     serializer_class = PropertySerializer
     pagination_class = PropertyPagination
     filter_backends = [
@@ -65,6 +65,7 @@ class ListAgentsPropertiesAPIView(generics.ListAPIView):
     # to change the queryset of list_api_view, use get_queryset method
     def get_queryset(self):
         user = self.request.user
+        print("agent ==== ", user)
         queryset = Property.objects.filter(user=user).order_by("-created_at")
         return queryset
 
@@ -87,8 +88,8 @@ class PropertyDetailAPIView(APIView):
         else:
             ip_addr = request.META.get("REMOTE_ADDR")
 
-        if not PropertyViews.objects.filter(property=property, ip=ip_addr).exists():
-            PropertyViews.objects.create(property=property, ip=ip_addr)
+        if not PropertyViews.objects.filter(property=property, ip_address=ip_addr).exists():
+            PropertyViews.objects.create(property=property, ip_address=ip_addr)
             # views to property will only increment if user goes to DETAIL_VIEW of property
             # for each unique user using the ip_addr
             property.views += 1
@@ -109,7 +110,7 @@ def update_property_api_view(request, slug):
     user = request.user
     if property.user != user:
         return Response(
-            {"error": "Not your property"}, status=status.HTTP_403_FORBIDDEN
+            {"error": "Not your property. You can't update it."}, status=status.HTTP_403_FORBIDDEN
         )
 
     if request.method == "PUT":
@@ -148,7 +149,7 @@ def delete_property_api_view(request, slug):
     user = request.user
     if property.user != user:
         return Response(
-            {"error": "Not your property!"}, status=status.HTTP_403_FORBIDDEN
+            {"error": "Not your property. You can't delete!"}, status=status.HTTP_403_FORBIDDEN
         )
 
     if request.method == "DELETE":
