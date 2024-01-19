@@ -38,11 +38,11 @@ class UpdateProfileView(APIView):
         except Profile.DoesNotExist:
             raise ProfileNotFound
 
-        user_name = request.user.username
-        if user_name != username:
+        if request.user.username != username:
             raise NotYourProfile
         
         data = request.data
+        print("user/owner of profile === ", request.user)
         print("======== ", data)
         serializer = UpdateProfileSerializer(
             instance=request.user.profile,
