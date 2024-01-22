@@ -185,7 +185,7 @@ class PropertySearchAPIView(APIView):
         queryset = Property.objects.filter(published_status=True)
 
         data = request.data
-        advert_type = data["avert_type"]
+        advert_type = data["advert_type"]
         queryset = Property.objects.filter(advert_type__iexact=advert_type)
 
         property_type = data["property_type"]
