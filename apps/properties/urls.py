@@ -8,6 +8,7 @@ urlpatterns = [
         "agents/", views.ListAgentsPropertiesAPIView.as_view(), name="agent-properties"
     ),
     path("create/", views.create_property_api_view, name="property-create"),
+    path("views/", views.PropertyViewsAPIView.as_view(), name="property-views"),
     path(
         "details/<slug:slug>/",
         views.PropertyDetailAPIView.as_view(),
