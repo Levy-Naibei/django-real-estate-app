@@ -7,7 +7,7 @@ class RatingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rating
-        exculde = ["updated_at", "pkid"]
+        exclude = ["updated_at", "pkid"]
 
     def get_rater(self, obj):
         return obj.rater.username
