@@ -4,6 +4,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from apps.profiles.models import Profile
+from apps.profiles.exceptions import ProfileNotFound
+from apps.ratings.serializers import RatingSerializer
 
 from .models import Rating
 
@@ -13,12 +15,14 @@ User = get_user_model()
 @api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
 def create_agent_review(request, profile_id):
-    agent_profile = Profile.objects.get(id=profile_id, is_agent=True)
-    print("agent's profile == ", agent_profile)
+    try:
+        agent_profile = Profile.objects.get(id=profile_id, is_agent=True)
+    except Profile.DoesNotExist:
+        raise ProfileNotFound
+
     data = request.data
 
     profile_user = User.objects.get(pkid=agent_profile.user.pkid)
-    print("agent/user/profile owner == ", profile_user)
     if profile_user.email == request.user.email:
         return Response(
             {"message": "You can't rate yourself"}, status=status.HTTP_403_FORBIDDEN
