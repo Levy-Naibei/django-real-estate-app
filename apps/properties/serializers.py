@@ -75,7 +75,9 @@ class PropertyCreateSerializer(serializers.ModelSerializer):
         exclude = ["updated_at", "pkid"]
 
 class PropertyViewSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source="property.user")
+    property_owner = serializers.CharField(source="property.user")
+    property = serializers.CharField(source="property.title")
+    
     class Meta:
         model = PropertyViews
         exclude = ["updated_at", "pkid"]
