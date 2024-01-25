@@ -4,6 +4,8 @@ client/node_modules
 .vscode
 .idea
 
+**/migrations/**
+
 ### OSX ###
 .DS_Store
 .AppleDouble

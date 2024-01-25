@@ -2,8 +2,9 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .models import User
 from .forms import CustomUserChangeForm, CustomUserCreationForm
+from .models import User
+
 
 class UserAdmin(BaseUserAdmin):
     ordering = ["email"]
@@ -18,7 +19,7 @@ class UserAdmin(BaseUserAdmin):
         "first_name",
         "last_name",
         "is_staff",
-        "is_active"
+        "is_active",
     ]
     list_display_links = ["id", "email"]
     list_filter = [
@@ -27,7 +28,7 @@ class UserAdmin(BaseUserAdmin):
         "first_name",
         "last_name",
         "is_staff",
-        "is_active"
+        "is_active",
     ]
 
     fieldsets = (
@@ -74,5 +75,6 @@ class UserAdmin(BaseUserAdmin):
         ),
     )
     search_fields = ["email", "username", "first_name", "last_name"]
+
 
 admin.site.register(User, UserAdmin)

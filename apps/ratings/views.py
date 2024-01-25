@@ -3,9 +3,8 @@ from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
-from apps.profiles.models import Profile
 from apps.profiles.exceptions import ProfileNotFound
-from apps.ratings.serializers import RatingSerializer
+from apps.profiles.models import Profile
 
 from .models import Rating
 
@@ -43,7 +42,7 @@ def create_agent_review(request, profile_id):
         )
 
     else:
-        review = Rating.objects.create(
+        Rating.objects.create(
             rater=request.user,
             agent=agent_profile,
             rating=data["rating"],

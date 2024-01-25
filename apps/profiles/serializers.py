@@ -1,8 +1,10 @@
-from rest_framework import serializers
 from django_countries.serializer_fields import CountryField
+from rest_framework import serializers
+
+from apps.ratings.serializers import RatingSerializer
 
 from .models import Profile
-from apps.ratings.serializers import RatingSerializer
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username")
@@ -34,27 +36,28 @@ class ProfileSerializer(serializers.ModelSerializer):
             "is_agent",
             "rating",
             "num_reviews",
-            "reviews"
+            "reviews",
         ]
 
     def get_full_name(self, obj):
         first_name = obj.user.first_name.title()
         last_name = obj.user.last_name.title()
         return f"{first_name} {last_name}"
-    
+
     def get_reviews(self, obj):
         # Rating model => agent field => value of related_name prop == agent_reviewed is what points to profile
         reviews = obj.agent_review.all()
-        # if many=True, you tell drf that queryset contains mutiple items (a list of items) 
+        # if many=True, you tell drf that queryset contains mutiple items (a list of items)
         # so drf needs to serialize each item with serializer class (and serializer.data will be a list)
         serializer = RatingSerializer(reviews, many=True)
         return serializer.data
-    
+
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         if instance.top_agent:
             representation["top_agent"] = True
         return representation
+
 
 class UpdateProfileSerializer(serializers.ModelSerializer):
     country = CountryField(name_only=True)
@@ -71,7 +74,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
             "city",
             "is_buyer",
             "is_seller",
-            "is_agent"
+            "is_agent",
         ]
 
     def to_representation(self, instance):
@@ -79,4 +82,3 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         if instance.top_agent:
             representation["top_agent"] = True
         return representation
-    

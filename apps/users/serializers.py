@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
-from djoser.serializers import UserCreateSerializer
 from django_countries.serializer_fields import CountryField
+from djoser.serializers import UserCreateSerializer
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
 User = get_user_model()
+
 
 class UserSerializer(serializers.ModelSerializer):
     gender = serializers.CharField(source="profile.gender")
@@ -33,20 +34,21 @@ class UserSerializer(serializers.ModelSerializer):
             "country",
             "city",
         ]
-    
+
     def get_first_name(self, obj):
         return obj.first_name.title()
-    
+
     def get_last_name(self, obj):
         return obj.last_name.title()
-    
+
     # to dynamically put values to serializer fields
     def to_representation(self, instance):
-        representation =  super(UserSerializer, self).to_representation(instance)
+        representation = super(UserSerializer, self).to_representation(instance)
         if instance.is_superuser:
             # if user is admin, then add admin=True to serializer field
             representation["admin"] = True
         return representation
+
 
 class CreateUserSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):

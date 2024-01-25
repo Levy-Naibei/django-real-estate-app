@@ -8,13 +8,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .exceptions import PropertyNotFound
-from .pagination import PropertyPagination
 from .models import Property, PropertyViews
-from .serializers import (
-    PropertyCreateSerializer,
-    PropertyViewSerializer,
-    PropertySerializer,
-)
+from .pagination import PropertyPagination
+from .serializers import (PropertyCreateSerializer, PropertySerializer,
+                          PropertyViewSerializer)
 
 logger = logging.getLogger(__name__)
 
@@ -88,7 +85,9 @@ class PropertyDetailAPIView(APIView):
         else:
             ip_addr = request.META.get("REMOTE_ADDR")
 
-        if not PropertyViews.objects.filter(property=property, ip_address=ip_addr).exists():
+        if not PropertyViews.objects.filter(
+            property=property, ip_address=ip_addr
+        ).exists():
             PropertyViews.objects.create(property=property, ip_address=ip_addr)
             # views to property will only increment if user goes to DETAIL_VIEW of property
             # for each unique user using the ip_addr
@@ -110,7 +109,8 @@ def update_property_api_view(request, slug):
     user = request.user
     if property.user != user:
         return Response(
-            {"error": "Not your property. You can't update it."}, status=status.HTTP_403_FORBIDDEN
+            {"error": "Not your property. You can't update it."},
+            status=status.HTTP_403_FORBIDDEN,
         )
 
     if request.method == "PUT":
@@ -149,7 +149,8 @@ def delete_property_api_view(request, slug):
     user = request.user
     if property.user != user:
         return Response(
-            {"error": "Not your property. You can't delete!"}, status=status.HTTP_403_FORBIDDEN
+            {"error": "Not your property. You can't delete!"},
+            status=status.HTTP_403_FORBIDDEN,
         )
 
     if request.method == "DELETE":
