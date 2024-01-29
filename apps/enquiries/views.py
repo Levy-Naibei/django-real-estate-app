@@ -32,5 +32,5 @@ def send_enquiry_email(request):
         enquiry.save()
         return Response({"Success": "Enquiry email submitted successfully"})
 
-    except Exception as e:
-        return Response({"Error": "Error occured while trying to send", "error message": e.__str__})
+    except Exception:
+        return Response({"Error": "Error occured while trying to send"})
