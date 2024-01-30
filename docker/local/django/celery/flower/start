@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -o errexit
+
+set -o nounset
+
+worker_ready() {
+    celery -A real_estate inspect ping
+}
+
+until worker_ready; do 
+    >&2 echo "Waiting for celery workers to be available..."
+    sleep 1
+done
+>&2 echo "Celery wokers are ready!!"
+
+flower \
+    --app=real_estate \
+    --broker="${CELERY_BROKER_URL}"
