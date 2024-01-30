@@ -51,6 +51,23 @@ services:
       - postgres-db
     networks:
       - estate-react
+  
+  flower:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start-flower
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - "5557:5555"
+    depends_on:
+      - redis
+      - postgres-db
+    networks:
+      - estate-react
 
   nginx:
     restart: always
