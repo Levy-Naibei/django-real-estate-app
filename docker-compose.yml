@@ -32,6 +32,26 @@ services:
     networks:
       - estate-react
   
+  redis:
+    image: redis:5-alpine
+    networks:
+      - estate-react
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start-celeryworker
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres-db
+    networks:
+      - estate-react
+
   nginx:
     restart: always
     depends_on:
@@ -55,4 +75,3 @@ volumes:
   postgres_data:
   static_volume:
   media_volume:
-
