@@ -86,9 +86,9 @@ class PropertyDetailAPIView(APIView):
             ip_addr = request.META.get("REMOTE_ADDR")
 
         if not PropertyViews.objects.filter(
-            property=property, ip_address=ip_addr
+            property=property, ip_address=ip_addr, viewer=request.user
         ).exists():
-            PropertyViews.objects.create(property=property, ip_address=ip_addr)
+            PropertyViews.objects.create(property=property, ip_address=ip_addr, viewer=request.user)
             # views to property will only increment if user goes to DETAIL_VIEW of property
             # for each unique user using the ip_addr
             property.views += 1

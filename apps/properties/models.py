@@ -162,9 +162,10 @@ class PropertyViews(TimestampedUUIDModel):
     property = models.ForeignKey(
         Property, related_name="property_views", on_delete=models.CASCADE
     )
+    viewer = models.CharField(verbose_name=_("Property viewer"), max_length=100, null=True)
 
     def __str__(self):
-        return f"Total views on - {self.property.title} is - {self.property.views}"
+        return f"Total views on - {self.property.title} is - {self.property.views} by {self.viewer}"
 
     class Meta:
         verbose_name = "Total views on property"
