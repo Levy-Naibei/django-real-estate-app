@@ -2,10 +2,10 @@ import { Container, Row, Col } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <footer className="bottom">
+    <footer>
       <Container>
-        <Row>
-            <Col className="py-3">
+        <Row className="text-center py-3">
+            <Col>
                 &copy; {new Date().getFullYear()} Real Estate. All Rights Reserved.
             </Col>
         </Row>
