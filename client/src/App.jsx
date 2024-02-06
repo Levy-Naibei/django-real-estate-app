@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import LandingPage from "./components/LandingPage";
-import Property from "./components/Property";
+import LandingPage from "./pages/LandingPage";
+import Property from "./pages/Property";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/properties" element={<Property />} />
         </Routes>
+        <Footer />
       </Router>
     </>
   );
