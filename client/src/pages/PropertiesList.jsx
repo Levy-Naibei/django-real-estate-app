@@ -38,7 +38,6 @@ const PropertiesList = () => {
   return (
     <>
       <Container className="vh-100">
-                              {/* git: add custom component title with Helmet */}
         <Title title="Properties Catalogue"/>
         <Row>
           <Col className="mg-top text-center">
