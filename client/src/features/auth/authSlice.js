@@ -4,7 +4,7 @@ import authService from "./authService";
 const user = JSON.parse(localStorage.getItem("token"));
 console.log("user from local storage === ", user);
 
-const initState = {
+const initialState = {
   user: user ? user : null,
   isSuccess: false,
   isError: false,
@@ -57,7 +57,7 @@ export const logout = createAsyncThunk("auth/signout", () => authService.logout(
 
 export const authSlice = createSlice({
   name: "auth",
-  initState,
+  initialState,
   reducers: {
     reset: (state) => {
       // return state synchronously
@@ -80,7 +80,7 @@ export const authSlice = createSlice({
       })
 
       .addCase(register.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isError = true;
         state.user = null;
         state.message = action.payload;
@@ -97,7 +97,7 @@ export const authSlice = createSlice({
       })
 
       .addCase(login.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         state.user = null;
@@ -113,7 +113,7 @@ export const authSlice = createSlice({
       })
 
       .addCase(activateUser.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         state.user = null;
