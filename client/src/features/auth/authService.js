@@ -22,10 +22,9 @@ const activateUser = async(data) => {
 
 // logs in user
 const login = async(credentials) => {
-    const response = await axios.post("/ap1/v1/auth/jwt/create/", credentials, config);
+    const response = await axios.post("/api/v1/auth/jwt/create/", credentials, config);
     
     if (response.data) {
-        console.log("token == ", JSON.stringify(response.data))
         localStorage.setItem("token", JSON.stringify(response.data));
     } else {
         if (response.data.email !== credentials.email || response.data.password !== credentials.password) {
