@@ -18,16 +18,15 @@ const PropertiesList = () => {
     if (isError) {
       toast.error(message);
     }
-    
+
     // setProperty(properties);
 
     dispatch(fetchProperties());
-  
   }, [dispatch, isError, message]);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
   // console.log("property list = ", property)
 
@@ -38,14 +37,16 @@ const PropertiesList = () => {
   return (
     <>
       <Container className="vh-100">
-        <Title title="Properties Catalogue"/>
+        <Title title="Properties Catalogue" />
         <Row>
           <Col className="mg-top text-center">
             <h4>Catalogue of properties</h4>
             <hr className="hr-text" />
           </Col>
         </Row>
-        {
+        {isLoading ? (
+          <Spinner />
+        ) : (
           <>
             <Row className="mt-3">
               {properties.length &&
@@ -63,7 +64,7 @@ const PropertiesList = () => {
                 ))}
             </Row>
           </>
-        }
+        )}
       </Container>
     </>
   );
