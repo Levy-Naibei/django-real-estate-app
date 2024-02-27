@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -6,6 +6,7 @@ import { fetchProperties } from "../features/properties/propertySlice";
 import Spinner from "../components/Spinner";
 import Property from "../components/Property";
 import Title from "../components/Title";
+import Footer from "../components/Footer"
 
 const PropertiesList = () => {
   // const [property, setProperty ] = useState([]);
@@ -36,7 +37,7 @@ const PropertiesList = () => {
 
   return (
     <>
-      <Container className="vh-100">
+      <Container>
         <Title title="Properties Catalogue" />
         <Row>
           <Col className="mg-top text-center">
@@ -48,7 +49,7 @@ const PropertiesList = () => {
           <Spinner />
         ) : (
           <>
-            <Row className="mt-3">
+            <Row className="my-3">
               {properties.length &&
                 properties.map((property) => (
                   <Col
@@ -66,6 +67,7 @@ const PropertiesList = () => {
           </>
         )}
       </Container>
+      <Footer />
     </>
   );
 };

@@ -98,7 +98,7 @@ const Login = () => {
         </Row>
         <Row className="py-3">
           <Col className="d-flex justify-content-center">
-            Don't have an account? <Link to="/register">Sign up </Link>
+            Don't have an account? <Link className="auth-link" to="/register">Sign up</Link>
           </Col>
         </Row>
       </Container>

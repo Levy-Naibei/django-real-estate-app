@@ -1,6 +1,7 @@
 import { Container, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Title from "../components/Title";
+import Footer from "../components/Footer";
 
 const LandingPage = () => {
   return (
@@ -11,7 +12,8 @@ const LandingPage = () => {
           <div className="text-center">
             <h1 className="text-uppercase mx-auto my-0">Real Estate</h1>
             <h2 className="text-white-50 mx-auto mt-2 mb-5">
-            Buy, sell or rent with us. The one stop shop for matters properties.
+              Buy, sell or rent with us. The one stop shop for matters
+              properties.
             </h2>
             <LinkContainer to="/properties">
               <Button variant="primary">Get Started</Button>
@@ -19,6 +21,7 @@ const LandingPage = () => {
           </div>
         </div>
       </Container>
+      <Footer />
     </header>
   );
 };
