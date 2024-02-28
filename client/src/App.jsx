@@ -5,6 +5,7 @@ import LandingPage from "./pages/LandingPage";
 import PropertiesList from "./pages/PropertiesList";
 import NotFound from "./components/NotFound";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/properties" element={<PropertiesList />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <ToastContainer theme="dark" />
