@@ -54,11 +54,11 @@ const PropertiesList = () => {
                 properties.map((property) => (
                   <Col
                     key={property.id}
-                    sm={12}
-                    md={6}
-                    lg={4}
-                    xl={3}
-                    className="m-2"
+                    // sm={12}
+                    // md={6}
+                    // lg={4}
+                    // xl={3}
+                    className="mb-3 ml-1"
                   >
                     <Property property={property} />
                   </Col>
