@@ -7,6 +7,7 @@ import { FaSignInAlt } from "react-icons/fa";
 import Title from "../components/Title";
 import Spinner from "../components/Spinner";
 import { login, reset } from "../features/auth/authSlice";
+import Footer from "../components/Footer";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Login = () => {
     }
 
     if (isSuccess || user) {
-      navigate("/");
+      navigate("/properties");
     }
     dispatch(reset());
   }, [user, dispatch, isSuccess, navigate, isError, message]);
@@ -45,10 +46,6 @@ const Login = () => {
     return dispatch(login(data));
   };
 
-  // const handleOnLoginChange = () => {
-
-  // }
-
   return (
     <>
       <Container className="vh-100">
@@ -65,10 +62,10 @@ const Login = () => {
         </Row>
         {isLoading && <Spinner />}
         <Row className="mt-3">
-          <Col className="d-flex justify-content-center">
+          <Col>
             <Form onSubmit={handleLogin}>
               <Form.Group className="mt-3" controlId="email">
-                <Form.Label>Email</Form.Label>
+                {/* <Form.Label>Email</Form.Label> */}
                 <Form.Control
                   type="email"
                   placeholder="Email"
@@ -77,7 +74,7 @@ const Login = () => {
                 />
               </Form.Group>
               <Form.Group className="mt-3" controlId="password">
-                <Form.Label>Password</Form.Label>
+                {/* <Form.Label>Password</Form.Label> */}
                 <Form.Control
                   type="password"
                   placeholder="Password"
@@ -102,6 +99,7 @@ const Login = () => {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </>
   );
 };
